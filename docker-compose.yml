@@ -1,0 +1,69 @@
+version: '3' #defines necessary containers
+# requires port, environmental variables, shared volumes
+#yaml-format is intendation-sensitive
+
+services: #everything below here will be an independent container
+
+  tweets:
+    build: tweets/ # custom-made; needs a build an image  according to a docker-file inside specified folder and run container with this image
+    volumes:
+      - ./tweets/:/app # copies/shares code between folders, allows to minimize Dockerfile content / synchronizes changes in the app to the container
+    depends_on:   #  depends_on: # ensures that the container mongodb/postgresdb-container is started before tweets-container, although it does not guarantee that it is ready to accept input
+      - mongodb
+      - postgresdb
+
+
+
+  mongodb:
+    image: mongo # exists as image in docker, does not need a build; images have been uploaded already to docker-hub
+    # port mapping LOCAL:CONTAINER
+    ports:
+    - 27017:27017 # change before ':' if installed locally as well
+
+  etl:
+    build: etl/
+    volumes:
+      - ./etl/:/app
+    depends_on:
+      - mongodb
+      - postgresdb
+    restart: "always" # if postgresdb is not ready, restart instead of thrwoing an error
+
+
+
+  postgresdb:
+   image: postgres
+#    port mapping LOCAL:CONTAINER
+   ports:
+   - 5432:5432 #(maybe use 5555:5432 if port is occupied already)
+   env_file:
+    - ./config/postgres.env # password or env-variable here
+#psql -h 0.0.0.0 -p 5555 -U postgres postgres # access docker-postgres from terminal
+   #volumes:
+    #- postgres_volume:/var/lib/postgresql/data/
+
+  metabase:
+   image: metabase/metabase
+   # volumes:
+   # - ./metabase/:/metabase-data
+   ports:
+   - 3000:3000
+   restart: "always"
+   env_file:
+    - ./config/metabase_database.env
+   depends_on:
+   - postgresdb
+
+
+#volumes:
+#  ./metabase/:
+
+  # word_cloud_pict:
+  #   build: word_cloud_pict/
+  #   volumes:
+  #     - ./word_cloud_pict/:/app
+  #     - ./docker_data/
+  #   depends_on:
+  #     - postgresdb
+  #   volumes:
+  #     - docker_data:/var/lib/word_cloud_pict/data/
