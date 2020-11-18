@@ -4,8 +4,8 @@
 - Query the data
 
 2. Transform the data
-- Sentiment Analysis (will see this in the afternoon)
-- Possibly we could transform datatypes
+- Sentiment Analysis
+- transform data to load into postgres
 
 3. Load it into Postgres
 - Connect to postgres
