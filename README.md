@@ -15,8 +15,8 @@ Tweet_Pipe is an example for an extract-transform-load pipeline. It uses Docker-
 
   - see its progress by typing:
     - docker-compose logs
-- or to see active containers:
-    - docker ps
+  - or to see active containers:
+      - docker ps
 
 - in case you want to stop the pipeline:
   - docker-compose kill (stops everything)
