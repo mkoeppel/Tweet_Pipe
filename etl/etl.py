@@ -14,9 +14,7 @@
 
 import time
 import logging
-
-from os import environ
-from dotenv import load_dotenv
+import config
 
 from pymongo import MongoClient
 from sqlalchemy import create_engine
@@ -29,6 +27,12 @@ client = MongoClient(host='mongodb', port=27017)
 db_mongo = client.twitter
 # connect to the tweets collection
 tweets = db_mongo.tweets
+
+POSTGRES_USER=config.POSTGRES_USER
+POSTGRES_PASSWORD=config.POSTGRES_PASSWORD
+POSTGRES_HOST=config.POSTGRES_HOST
+POSTGRES_PORT=config.POSTGRES_PORT
+POSTGRES_DB_NAME=config.POSTGRES_DB_NAME
 
 
 ### Create connection to postgresdb
