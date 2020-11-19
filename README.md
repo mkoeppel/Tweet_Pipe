@@ -4,7 +4,7 @@ Tweet_Pipe is an example for an extract-transform-load pipeline. It uses Docker-
 ## How to use:
 - start by cloning the repository
 - get access token and consumer api from twitter
-  - past in the appropriate place in credentials.py
+  - paste in the appropriate place in credentials.py
 
 - set your keywords to select tweets about a particular topic, be entering them in line 69 of the get_tweets script:
   - stream.filter(track=['put your terms in here', 'use a list structure'], languages=['en'])
