@@ -1,5 +1,5 @@
 # Tweet_Pipe
-Tweet_Pipe is an example for an airflow-scheduled ETL pipeline. It uses Docker-containers to extract tweets from Twitter-API, then stores them in a MongoDB, performs sentiment analysis of the content, followed by storage in a PostgresDB, and provides cumulative summaries with a metabase dashboard. .
+Tweet_Pipe is an example for an airflow-scheduled ETL pipeline. It uses Docker-containers to extract tweets from Twitter-API, then stores them in a MongoDB, performs sentiment analysis of the content, followed by storage in a PostgresDB, and provides cumulative summaries with a metabase dashboard.
 
 ## How to use:
 - start by cloning the repository
