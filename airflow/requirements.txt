@@ -1,0 +1,4 @@
+pymongo==3.10.1
+SQLAlchemy
+psycopg2-binary
+vaderSentiment

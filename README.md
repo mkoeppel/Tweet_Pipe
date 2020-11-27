@@ -6,7 +6,7 @@ Tweet_Pipe is an example for an extract-transform-load pipeline. It uses Docker-
 - get access token and consumer api from twitter
   - paste in the appropriate place in credentials.py
 
-- set your keywords to select tweets about a particular topic, be entering them in line 69 of the get_tweets script:
+- set your keywords to select tweets about a particular topic, by entering them in line 69 of the get_tweets script:
   - stream.filter(track=['put your terms in here', 'use a list structure'], languages=['en'])
     - languages could be changed, however the sentiment analysis is supported only for english right now
 - In the Tweet_Pipe folder build docker pipeline by entering in a terminal shell:
