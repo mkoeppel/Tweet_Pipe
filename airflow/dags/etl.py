@@ -5,7 +5,7 @@
 
 2. Transform the data
 - Sentiment Analysis
-- transform data to load into postgres
+- Transform data to load into postgres
 
 3. Load it into Postgres
 - Connect to postgres
@@ -23,22 +23,17 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 
-### Create connection to mongodb
+POSTGRES_USER=config.POSTGRES_USER
+POSTGRES_PASSWORD=config.POSTGRES_PASSWORD
+POSTGRES_HOST=config.POSTGRES_HOST
+POSTGRES_PORT=config.POSTGRES_PORT
+POSTGRES_DB_NAME=config.POSTGRES_DB_NAME
 
 
-# POSTGRES_USER=config.POSTGRES_USER
-# POSTGRES_PASSWORD=config.POSTGRES_PASSWORD
-# POSTGRES_HOST=config.POSTGRES_HOST
-# POSTGRES_PORT=config.POSTGRES_PORT
-# POSTGRES_DB_NAME=config.POSTGRES_DB_NAME
-
-
-### Create connection to postgresdb
-# conns = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
-
-# db_pg = create_engine(conns, echo=True)
+conns = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
+db_pg = create_engine(conns, echo=True)
 #                   DB type    user     psw  host       port dbname
-db_pg = create_engine("postgres://postgres:1234@postgresdb:5432/postgres", echo=True)
+#db_pg = create_engine("postgres://postgres:1234@postgresdb:5432/postgres", echo=True)
 
 
 create_table = """
@@ -60,7 +55,7 @@ db_pg.execute(create_table)
 
 def extract():
     """Extracts tweets from the MongoDB database
-    and mark them as extracted
+    with a time-interval spanning back to the previous extraction
     """
     client = MongoClient(host="mongodb", port=27017)
     # connect to the twitter database
@@ -129,7 +124,7 @@ default_args = {
     "start_date": datetime(2020, 11, 25),
     "email": "[mmmaxwell7@gmail.com]",
     "email_on_failure": False,
-    "email_onretry": False,
+    "email_on_retry": False,
     "retries": 1,
     "retry_delay": timedelta(minutes=1),
 }
@@ -162,4 +157,4 @@ task_load = PythonOperator(
     dag=dag,
 )
 
-task_extract >> task_transform >> task_extract
+task_extract >> task_transform >> task_load

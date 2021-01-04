@@ -37,7 +37,7 @@ def authenticate():
 
 class TwitterListener(StreamListener):  # requiered for the tweepy-library to work
     def on_data(
-            self, data
+        self, data
     ):  # this is called whenever new tweet arives/ data is the tweet itself, as json-file
         """Whatever we put in this method defines what is done with
         every single tweet as it is intercepted in real-time"""
@@ -50,14 +50,14 @@ class TwitterListener(StreamListener):  # requiered for the tweepy-library to wo
 
         keyword = None
         for key in [
-                "covid-19",
-                "vaccine",
-                "pandemic",
-                "Pfizer",
-                "Biontech",
-                "AstraZeneca",
-                "Moderna",
-                ]:
+            "covid-19",
+            "vaccine",
+            "pandemic",
+            "Pfizer",
+            "Biontech",
+            "AstraZeneca",
+            "Moderna",
+        ]:
             if (key in text) or (key in t["entities"]["hashtags"]):
                 keyword = key
         tweet = {
