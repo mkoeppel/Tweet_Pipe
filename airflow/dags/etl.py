@@ -21,20 +21,18 @@ import psycopg2
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+import config
 
+POSTGRES_USER = config.POSTGRES_USER
+POSTGRES_PASSWORD = config.POSTGRES_PASSWORD
+POSTGRES_HOST = config.POSTGRES_HOST
+POSTGRES_PORT = config.POSTGRES_PORT
+POSTGRES_DB_NAME = config.POSTGRES_DB_NAME
 
-POSTGRES_USER=config.POSTGRES_USER
-POSTGRES_PASSWORD=config.POSTGRES_PASSWORD
-POSTGRES_HOST=config.POSTGRES_HOST
-POSTGRES_PORT=config.POSTGRES_PORT
-POSTGRES_DB_NAME=config.POSTGRES_DB_NAME
-
-
-conns = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
-db_pg = create_engine(conns, echo=True)
+conn_string = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
+db_pg = create_engine(conn_string, echo=True)
 #                   DB type    user     psw  host       port dbname
 #db_pg = create_engine("postgres://postgres:1234@postgresdb:5432/postgres", echo=True)
-
 
 create_table = """
                 CREATE TABLE IF NOT EXISTS tweets (
