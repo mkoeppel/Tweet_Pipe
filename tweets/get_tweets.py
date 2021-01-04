@@ -1,5 +1,9 @@
-from datetime import datetime, timedelta
+"""
+allows authentification for the twitter API
+and obtains tweets for a specific topic to be stored in MongoDB
+"""
 
+from datetime import datetime, timedelta
 
 import json
 import logging
@@ -14,7 +18,7 @@ client = pymongo.MongoClient(host="mongodb", port=27017)
 
 db_mongo = (
     client.twitter
-)  # similar to the command 'use twitter', creates db if not exists
+)
 
 
 def authenticate():
@@ -27,7 +31,6 @@ def authenticate():
        3. ACCESS_TOKEN
        4. ACCESS_TOKEN_SECRET
 
-    See course material for instructions on getting your own Twitter credentials.
     """
     auth = OAuthHandler(credentials.CONSUMER_API_KEY, credentials.CONSUMER_API_SECRET)
     auth.set_access_token(credentials.ACCESS_TOKEN, credentials.ACCESS_TOKEN_SECRET)
@@ -43,7 +46,7 @@ class TwitterListener(StreamListener):  # requiered for the tweepy-library to wo
         every single tweet as it is intercepted in real-time"""
         t = json.loads(
             data
-        )  # t is just a regular python dictionary. tweets contain much more information than just the here extracted ones
+        )
         text = t["text"]
         if "extended_tweet" in t:
             text = t["extended_tweet"]["full_text"]
@@ -76,10 +79,8 @@ class TwitterListener(StreamListener):  # requiered for the tweepy-library to wo
         # print(text + '\n\n') # instead of the logging.critical below
         db_mongo.twitter.insert(tweet)
         logging.critical("tweet added to mondoDB")
-        # do additional stuff here, like write a tweet to a database, or add an option to get the whole tweet into the database as well
         logging.critical(f'\n\n\nTWEET INCOMING: {tweet["text"]}\n\n\n')
 
-    # ,{$set : {"extracted":"no"}}
     def on_error(self, status):
 
         if status == 420:
