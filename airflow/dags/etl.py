@@ -92,12 +92,12 @@ def load(**context):
         insert_query = "INSERT INTO tweets VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         # DEFAULT,
         # :user_name,
+        # :text,
         # :followers_count,
         # :location,
-        # :text,
-        # :sentiment,
         # :reply_count,
         # :retweet_count,
+        # :sentiment,
         # :keyword,
         # :timestamp)"""
         db_pg.execute(
