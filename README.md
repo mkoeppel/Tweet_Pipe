@@ -8,7 +8,7 @@ Tweet_Pipe is an example for an Airflow-scheduled ETL pipeline. It uses Docker-c
 - get access token and consumer api from twitter
   - paste in the appropriate place in credentials.py
 
-- set your keywords to select tweets about a particular topic, by entering them in the TwitterListener-Class into the keyword list (from line 45 on) and in line 69 of the get_tweets script:
+- set your keywords to select tweets about a particular topic, by entering them in the TwitterListener-Class into the keyword list and in the stream.filter of the get_tweets script:
   - keyword = None
         for key in ['put your terms in here', 'use a list structure']
   - stream.filter(track=['put your terms in here', 'use a list structure'], languages=['en'])
