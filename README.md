@@ -25,6 +25,7 @@ Tweet_Pipe is an example for an Airflow-scheduled ETL pipeline. It uses Docker-c
 ![alt text](https://github.com/mkoeppel/Tweet_Pipe/blob/main/Tweet_Pipe_Airflow.gif)
 
 - and to http://localhost:3000/ for the metabase dashboard
+![alt text](https://github.com/mkoeppel/Tweet_Pipe/blob/main/Twitter_Metabase.gif)
 
 - in case you want to stop the pipeline:
   - docker-compose kill (stops everything)
