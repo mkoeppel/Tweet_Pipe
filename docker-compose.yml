@@ -5,7 +5,7 @@ version: '3' #defines necessary containers
 services: #everything below here will be an independent container
 
   tweets:
-    build: tweets/ # custom-made; needs a build an image  according to a docker-file inside specified folder and run container with this image
+    build: tweets/ # custom-made; needs a build; an image according to a docker-file inside specified folder and run container with this image
     volumes:
       - ./tweets/:/app # copies/shares code between folders, allows to minimize Dockerfile content / synchronizes changes in the app to the container
     depends_on:   #  depends_on: # ensures that the container mongodb/postgresdb-container is started before tweets-container, although it does not guarantee that it is ready to accept input
